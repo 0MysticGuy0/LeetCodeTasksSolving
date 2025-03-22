@@ -22,6 +22,7 @@ Constraints:
 s consist of only digits and English letters.
  */
 
+//move from center!
 public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
