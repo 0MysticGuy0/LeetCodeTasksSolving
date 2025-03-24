@@ -27,8 +27,8 @@ Constraints:
 1 <= nums[i] <= 104
  */
 
-import java.util.Arrays;
 
+//1 ms Beats 99.79%
 public class MinimumSizeSubarraySum {
 
     public static void main(String[] args) {
@@ -36,17 +36,17 @@ public class MinimumSizeSubarraySum {
     }
 
     public int minSubArrayLen(int target, int[] nums) {
-        int len = 0;
+        int subStart = 0;
         int minLen = Integer.MAX_VALUE;
         int currSum = 0;
         for (int i = 0; i < nums.length; i++) {
-            len++;
             currSum += nums[i];
             while (currSum >= target){
-                if(len == 1) return 1;
-                if(minLen > len) minLen = len;
-                currSum -= nums[i-len + 1];
-                --len;
+                int currLen = i - subStart + 1;
+                if(currLen == 1) return 1;
+                if(minLen > currLen) minLen = currLen;
+                currSum -= nums[subStart];
+                subStart++;
             }
         }
 
