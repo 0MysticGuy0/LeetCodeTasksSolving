@@ -37,29 +37,41 @@ Constraints:
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
+
+//Runtime 26 ms Beats 91.54%
 public class _3Sum {
+
+    public static void main(String[] args) {
+        new _3Sum().threeSum(new int[]{1,2,-2,-1}).forEach(l -> {
+            System.out.println("=-=-=-");
+            l.forEach(ll -> System.out.print(ll + " "));
+        });
+    }
 
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(nums);
-        List<Integer> numsList = Arrays.stream(nums).boxed().toList();
 
-        for (int i = 0; i < nums.length - 2; i++) {
-            int curr1 = nums[i];
-            if(curr1 > 0) break;
-            if(i > 0 && curr1 == nums[i-1]) continue;
-            for (int j = i + 1; j < nums.length - 1; j++) {
-                int curr2 = nums[j];
-                if(j > (i + 1) && curr2 == nums[j-1]) continue;
-                int neededNum = -curr1 - curr2;
-                if(neededNum < curr2) break;
-                int neededNIndx = numsList.lastIndexOf(neededNum);
-                if(neededNIndx > j){
-                    List<Integer> l = List.of(curr1, curr2, neededNum);
-                    if(!res.contains(l))
-                        res.add(l);
+        for (int i = 0; i < nums.length-2; i++) {
+            int n = nums[i];
+            if(n > 0 ) break;
+            if(i > 0 && n == nums[i-1]) continue;
+            int left = i+1;
+            int right = nums.length-1;
+
+            while (left < right){
+                int ln = nums[left];
+                int rn = nums[right];
+                int sum = n + ln + rn;
+                if(sum == 0) {
+                    res.add(List.of(n, ln, rn));
+                    while(left < right && nums[left] == ln) left++;
+                    while(right > left && nums[right] == rn) right--;
+                }else if(sum > 0){
+                    while(right > left && nums[right] == rn) right--;
+                }else{
+                    while(left < right && nums[left] == ln) left++;
                 }
             }
         }
