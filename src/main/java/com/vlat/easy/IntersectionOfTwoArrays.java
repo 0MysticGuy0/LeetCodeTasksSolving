@@ -30,29 +30,24 @@ import java.util.Set;
 public class IntersectionOfTwoArrays {
 
     public int[] intersection(int[] nums1, int[] nums2) {
-        Arrays.sort(nums1);
-        Arrays.sort(nums2);
-        Set<Integer> res = new HashSet<>();
-
-        int i = 0, j = 0;
-        while(i < nums1.length && j < nums2.length){
-            int n1 = nums1[i];
-            int n2 = nums2[j];
-
-            if(n1 == n2){
-               res.add(n1);
-               i++;j++;
-            }else if (n1 > n2){
-                j++;
-            }else{
-                i++;
+        int[] arr = new int[1001];
+        for (int n : nums1) {
+            arr[n] = 1;
+        }
+        int len = 0;
+        for (int n :nums2) {
+            if(arr[n] == 1){
+                arr[n] = 2;
+                len++;
             }
         }
-
-        int[] r = new int[res.size()];
-        i=0;
-        for(int n : res){
-            r[i++] = n;
+        int[] r = new int[len];
+        int i = 0;
+        for(int n:nums2){
+            if(arr[n] == 2){
+                arr[n] = 1;
+                r[i++] = n;
+            }
         }
         return r;
     }
