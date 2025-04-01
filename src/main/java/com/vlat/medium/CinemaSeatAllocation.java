@@ -36,8 +36,6 @@ reservedSeats[i].length == 2
 All reservedSeats[i] are distinct.
  */
 
-import java.util.Arrays;
-import java.util.Comparator;
 
 //Runtime 10 ms Beats 99.25%
 //Memory 48.58 MB Beats 89.89%
