@@ -39,6 +39,8 @@ All reservedSeats[i] are distinct.
 import java.util.Arrays;
 import java.util.Comparator;
 
+//Runtime 10 ms Beats 99.25%
+//Memory 48.58 MB Beats 89.89%
 public class CinemaSeatAllocation {
 
     public static void main(String[] args) {
@@ -46,38 +48,27 @@ public class CinemaSeatAllocation {
     }
 
     public int maxNumberOfFamilies(int n, int[][] reservedSeats) {
-        int maxNum = 0;
-        Arrays.sort(reservedSeats, Comparator.comparingInt(a -> a[0]));
-
-        int reservedRows = n-1;
-        int currRow = 1;
-        boolean[] places = {true, true, true};
-        for(int[] s:reservedSeats){
-            if(currRow != s[0]){
-                currRow = s[0];
-                reservedRows-=1;
-                if(places[0] && places[2]) maxNum+= 2;
-                else if(places[0] || places[1] || places[2]) maxNum += 1;
-                places[0] = true;
-                places[1] = true;
-                places[2] = true;
-            }
-            else if(!(places[0] || places[1] || places[2])) continue;
-            int label = s[1];
-            if(label >= 2 && label <=5){
-                places[0] = false;
-                if(label >= 4) places[1] = false;
-            }
-            else if(label >= 6 && label <= 9){
-                places[2] = false;
-                if(label <= 7) places[1] =false;
-            }
+        int minRow = Integer.MAX_VALUE;
+        int maxRow = Integer.MIN_VALUE;
+        for (int[] s:reservedSeats){
+            if(s[0] < minRow) minRow = s[0];
+            if(s[0] > maxRow) maxRow = s[0];
         }
-        if(places[0] && places[1] && places[2]) maxNum+= 2;
-        else if(places[0] || places[1] || places[2]) maxNum += 1;
-        maxNum += reservedRows*2;
 
-        return maxNum;
+        byte[] seatsMask = new byte[maxRow-minRow+1]; //array with bit-mask of positions int rows (use only 3 last bites - for 3 positions)
+        for (int[] s:reservedSeats){
+            if(s[1] >= 2 && s[1] <= 5) seatsMask[s[0]-minRow] |= 4;
+            else if(s[1] >= 6 && s[1] <= 9) seatsMask[s[0]-minRow] |= 1;
+            if(s[1] >= 4 && s[1] <= 7) seatsMask[s[0]-minRow] |= 2;
+        }
+
+        int res = (n-seatsMask.length) * 2;
+        for(byte b:seatsMask){
+            if(b==0) res += 2;
+            else if (b < 7) res += 1;
+        }
+
+        return res;
     }
 
 }
