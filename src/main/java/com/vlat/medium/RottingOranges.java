@@ -37,10 +37,11 @@ n == grid[i].length
 grid[i][j] is 0, 1, or 2.
  */
 
+import java.util.Stack;
+
 public class RottingOranges {
 
     public int orangesRotting(int[][] grid) {
-
         int freshNum = -1;
         int mins = 0;
         while(freshNum != 0){

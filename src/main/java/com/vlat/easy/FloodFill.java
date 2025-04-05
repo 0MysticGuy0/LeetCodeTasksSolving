@@ -53,7 +53,6 @@ public class FloodFill {
 
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
         int startPixel = image[sr][sc];
-
         if(startPixel == color) return image;
         fillPixel(image, sr, sc, color, startPixel);
         return image;
