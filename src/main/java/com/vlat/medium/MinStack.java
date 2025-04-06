@@ -43,6 +43,7 @@ At most 3 * 104 calls will be made to push, pop, top, and getMin.
 
 import java.util.Stack;
 
+//Runtime 4 ms Beats 97.36%
 public class MinStack {
 
         private Stack<Integer> stack;
